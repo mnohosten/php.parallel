@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+
+  php:
+    build: docker/php
+    volumes:
+      - .:/var/www
+    ports:
+      - 6680:80
+    networks:
+      - web
+
+  mysql:
+    image: mariadb:10.2
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test_db
+    volumes:
+      - ./docker/mysql/test_db:/dump
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
