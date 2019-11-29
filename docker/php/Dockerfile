@@ -277,7 +277,7 @@ ENTRYPOINT ["docker-php-entrypoint"]
 STOPSIGNAL SIGWINCH
 
 COPY apache2-foreground /usr/local/bin/
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 EXPOSE 80
 CMD ["apache2-foreground"]
@@ -297,3 +297,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN pecl install -o -f parallel && docker-php-ext-enable parallel
 # PHP extension pdo_mysql
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
+RUN apt-get update
+RUN apt-get install -y git
